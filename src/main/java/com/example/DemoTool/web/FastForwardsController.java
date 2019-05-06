@@ -14,10 +14,13 @@ public class FastForwardsController {
     @Autowired
     ImportFromTimeService importFromTimeService;
 
+    private long now = System.currentTimeMillis();
+
     @RequestMapping(value = {"/fastForwards"}, method = RequestMethod.GET)
     public String form(Model model) {
         String dayComputedNow = importFromTimeService.convertLongToStringDate(importFromTimeService.getTimeData().getComputedNow());
         model.addAttribute("computedNow", dayComputedNow);
+        model.addAttribute("now", now);
         return "time/fastForwards";
     }
 
