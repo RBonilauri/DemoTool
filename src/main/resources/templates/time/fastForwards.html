@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Fast Forwards</h1>
+
+<div>
+    <form action="#" th:action="@{/fastForwards}" id="nextCard" method="POST">
+
+        <button type="submit" name="action" value="Previous">Previous</button>
+        <button type="submit" name="action" value="Next">Next</button>
+    </form>
+</div>
+
+<a th:href="@{/}">retour</a>
+
+
+</body>
+</html>

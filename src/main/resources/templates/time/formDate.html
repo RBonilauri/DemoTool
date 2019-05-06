@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Change Date</title>
+    <link href="style.css" rel="stylesheet">
+</head>
+<body>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"
+        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" c
+        rossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment-with-locales.min.js"></script>
+
+<link href="css/datetimepicker.css" rel="stylesheet">
+<script src="js/datetimepicker.js"></script>
+
+<div class="container" id="picker">
+    <form action="#" th:action="@{/formDate}" th:object="${virtualTimeForm}" method="POST">
+        <fieldset>
+            <legend id="legend">Set a new date</legend>
+            <p th:text="'Choosen date : '+${actualChoosenDate}"></p>
+            <p th:text="'Actual date : '+${actualDate}"></p>
+            <div class="form-group">
+                <br><label>Date :</label>
+                <input type="date" content="" th:field="*{date}" id="result1"><br><br>
+                <label>Hour :</label>
+                <input type="time" th:field="*{time}" id="result2">
+                <br>
+            </div>
+            <div class="form-group">
+                <br>
+                <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+<div th:if="${dateErrorMessage}" th:utext="${dateErrorMessage}"></div>
+<br>
+<div th:if="${timeErrorMessage}" th:utext="${timeErrorMessage}"></div>
+<a th:href="@{/}">retour</a>
+
+<script>
+$('#result1').datePicker({
+    selectData: "now",
+     dateFormat: "DD/MM/YYYY",
+     positionShift: { top: 20, left: 0},
+     buttonTitle: "Select"
+});
+
+$('#result2').timePicker({
+});
+
+</script>
+</body>
+</html>
