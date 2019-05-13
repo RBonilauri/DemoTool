@@ -6,23 +6,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<div th:replace="fragments/header :: header"/>
 <form action="#" th:action="@{/formSpeed}" th:object="${timeDataForm}" method="POST">
     <fieldset>
         <legend id="legend">Set a new Speed</legend>
-        <p th:text="'Actual speed : '+${actualSpeed}"></p>
-        <label>Speed : </label>
-        <select th:field="*{speed}">
-            <option th:each="flowSpeed : ${flowSpeeds}"
-                    th:value="${flowSpeed}"
-                    th:utext="${flowSpeed}"/>
-        </select><br><br>
-        <button type="submit">Submit</button>
+        <div class="fieldsetContent">
+            <p th:text="'Actual speed : '+${actualSpeed}"></p>
+            <label>Speed : </label>
+            <select th:field="*{speed}">
+                <option th:each="flowSpeed : ${flowSpeeds}"
+                        th:value="${flowSpeed}"
+                        th:utext="${flowSpeed}"/>
+            </select><br><br>
+        </div>
+        <button class="button" type="submit">Submit</button>
     </fieldset>
 </form>
 <br>
 
 <div th:if="${errorMessage}" th:utext="${errorMessage}"></div>
-<a th:href="@{/}">retour</a>
+<!--<br><a th:href="@{/}">Back to menu</a>-->
 
 </body>
 </html>

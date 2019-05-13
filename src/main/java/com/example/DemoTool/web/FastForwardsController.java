@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class FastForwardsController {
 
-    @Autowired
-    ImportFromTimeService importFromTimeService;
+    ImportFromTimeService importFromTimeService = new ImportFromTimeService();
 
     private long now = System.currentTimeMillis();
 
@@ -25,23 +24,20 @@ public class FastForwardsController {
     }
 
     @RequestMapping(value = {"/fastForwards"}, method = RequestMethod.POST)
-    public String post(@RequestParam(value = "action") String action) {
-        String forReturn = "time/fastForwards";
+    public String post(@RequestParam(value = "action", required = true) String action) {
+
         long computedNow = importFromTimeService.getTimeData().getComputedNow();
 
-        switch (action) {
-            case "Previous":
-                System.out.println("Previous has been selected");
-                System.out.println(computedNow + " " + importFromTimeService.convertLongToStringDate(computedNow));
-                importFromTimeService.postPreviousCardWithoutMillisTime();
-                forReturn = "redirect:index";
-                break;
-            case "Next":
-                System.out.println("Next has been selected");
-                importFromTimeService.postNextCardWithoutMillisTime();
-                forReturn = "redirect:index";
-                break;
+        if (action.equals("Previous")) {
+            System.out.println("Previous has been selected");
+            System.out.println(computedNow + " " + importFromTimeService.convertLongToStringDate(computedNow));
+            importFromTimeService.postPreviousCard(importFromTimeService.getTimeData().getComputedNow());
         }
-        return forReturn;
+        if (action.equals("Next")) {
+            System.out.println("Next has been selected");
+            importFromTimeService.postNextCard(importFromTimeService.getTimeData().getComputedNow());
+        }
+        return "redirect:index";
     }
+
 }

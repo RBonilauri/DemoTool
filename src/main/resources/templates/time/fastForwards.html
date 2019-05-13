@@ -2,20 +2,41 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Fast Forwards</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Fast Forwards</h1>
-
-<div>
-    <form action="#" th:action="@{/fastForwards}" id="nextCard" method="POST">
-
-        <button type="submit" name="action" value="Previous">Previous</button>
-        <button type="submit" name="action" value="Next">Next</button>
-    </form>
-</div>
-
-<a th:href="@{/}">retour</a>
+<div th:replace="fragments/header :: header"/>
+<fieldset>
+    <legend id="legend">Fast Forwards</legend>
+    <div class="fieldsetContent">
+        <ul>
+            <li>
+                Click on "Previous" to get the last card from now.
+            </li>
+            <li>
+                Click on "Next" to get the next card from now.
+            </li>
+        </ul>
+        <form action="#" th:action="@{/fastForwards}" id="nextCard" method="POST">
+            <table>
+                <tr>
+                    <td>
+                        <button type="submit" name="action" value="Previous">Previous</button>
+                    </td>
+                    <td>
+                        <div id="date" th:text="${computedNow}"></div>
+                    </td>
+                    <td>
+                        <button type="submit" name="action" value="Next">Next</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <br>
+</fieldset>
+<!--<br><a th:href="@{/}">Back to menu</a>-->
 
 
 </body>

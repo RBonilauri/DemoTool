@@ -1,34 +1,30 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Demo Tool</title>
     <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
+<div th:replace="fragments/header :: header"/>
 <fieldset>
     <legend id="legend">Demo Tool</legend>
-
-    <p th:text="'Date : '+${computedNow}"></p>
-
-    <th>
-        <input type="button" value="get /time" onclick="afficheJsonTime()">
-        <input type="button" value="vitesse" onclick="afficheVitesse()">
-    </th>
-    <br><br>
-
-
-    <h3>Actions : </h3>
-    <ul>
-        <li><a th:href="@{/formSpeed}">Change Speed</a></li>
-        <li><a th:href="@{/formDate}">Change Date</a><br></li>
-        <li><a th:href="@{/fastForwards}">Fast-forwards / Rewind</a></li>
-    </ul>
-
+    <div class="fieldsetContent">
+        <p th:text="'Date : '+${computedNow}"></p>
+        <th>
+            <input type="button" value="get /time" onclick="afficheJsonTime()">
+            <input type="button" value="vitesse" onclick="afficheVitesse()">
+        </th>
+        <br><br>
+        <h3>Actions : </h3>
+        <ul>
+            <li><a th:href="@{/formSpeed}">Change Speed</a></li>
+            <li><a th:href="@{/formDate}">Change Date</a><br></li>
+            <li><a th:href="@{/fastForwards}">Fast-forwards / Rewind</a></li>
+        </ul>
+    </div>
 </fieldset>
-
 <p hidden id="getTime" th:text="${timeInfo}"/>
 <p hidden id="speed" th:text="${speed}"/>
 

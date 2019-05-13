@@ -3,9 +3,7 @@ package com.example.DemoTool.service;
 import com.example.DemoTool.model.ResponseObject;
 import com.example.DemoTool.model.TimeData;
 import org.lfenergy.operatorfabric.time.model.SpeedEnum;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.*;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -85,9 +83,19 @@ public class ImportFromTimeService {
      * timeData object
      */
     public TimeData getTimeData() {
+        String uri = "http://localhost:2101/time";
+        String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
+        headers.set("Authorization", accessToken);
+
+        HttpEntity<TimeData> request = new HttpEntity<>(headers);
+
         RestTemplate restTemplate = new RestTemplate();
-        TimeData timeData = restTemplate.getForObject("http://localhost:2101/time", TimeData.class);
-        return timeData;
+        ResponseEntity<TimeData> timeData = restTemplate.exchange(uri, HttpMethod.GET, request, TimeData.class);
+        return timeData.getBody();
     }
 
     /**
@@ -144,7 +152,7 @@ public class ImportFromTimeService {
      */
     public URI postNextCardWithoutMillisTime() {
         String uri = "http://localhost:2101/time/next/card";
-        String timeFromEpoch = "\"" + getTimeData().getComputedNow() + "\"";
+//        String timeFromEpoch = "\"" + getTimeData().getComputedNow() + "\"";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
 
         HttpHeaders headers = new HttpHeaders();
@@ -152,10 +160,29 @@ public class ImportFromTimeService {
         headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
         headers.set("Authorization", accessToken);
 
-        HttpEntity<String> request = new HttpEntity<>(timeFromEpoch, headers);
+        HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
         URI response = restTemplate.postForLocation(uri, request);
+        return response;
+    }
+
+    public URI postNextCard(long choosenTime) {
+        String uri = "http://localhost:2101/time/" + choosenTime + "/next/card";
+        String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
+        headers.set("Authorization", accessToken);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        System.out.println(uri);
+        URI response = restTemplate.postForLocation(uri, request);
+
+        System.out.println(response);
         return response;
     }
 
@@ -164,7 +191,7 @@ public class ImportFromTimeService {
      */
     public ResponseObject postPreviousCardWithoutMillisTime() {
         String uri = "http://localhost:2101/time/previous/card";
-        String timeFromEpoch = "\"" + getTimeData().getComputedNow() + "\"";
+//        String timeFromEpoch = "\"" + getTimeData().getComputedNow() + "\"";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
 
         HttpHeaders headers = new HttpHeaders();
@@ -172,11 +199,31 @@ public class ImportFromTimeService {
         headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
         headers.set("Authorization", accessToken);
 
-        HttpEntity<String> request = new HttpEntity<>(timeFromEpoch, headers);
+        HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseObject responseObject = restTemplate.postForObject(uri, request, ResponseObject.class);
         return responseObject;
     }
+
+    public URI postPreviousCard(long choosenTime) {
+        String uri = "http://localhost:2101/time/" + choosenTime + "/previous/card";
+        String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
+        headers.set("Authorization", accessToken);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        System.out.println(uri);
+        URI response = restTemplate.postForLocation(uri, request);
+
+        System.out.println(response);
+        return response;
+    }
+
 
 }

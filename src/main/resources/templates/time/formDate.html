@@ -6,7 +6,7 @@
     <link href="style.css" rel="stylesheet">
 </head>
 <body>
-
+<div th:replace="fragments/header :: header"/>
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" c
         rossorigin="anonymous"></script>
@@ -19,19 +19,22 @@
     <form action="#" th:action="@{/formDate}" th:object="${virtualTimeForm}" method="POST">
         <fieldset>
             <legend id="legend">Set a new date</legend>
-            <p th:text="'Choosen date : '+${actualChoosenDate}"></p>
-            <p th:text="'Actual date : '+${actualDate}"></p>
-            <div class="form-group">
-                <br><label>Date :</label>
-                <input type="date" content="" th:field="*{date}" id="result1"><br><br>
-                <label>Hour :</label>
-                <input type="time" th:field="*{time}" id="result2">
-                <br>
+            <div class="fieldsetContent">
+                <p th:text="'Choosen date : '+${actualChoosenDate}"></p>
+                <p th:text="'Actual date : '+${actualDate}"></p>
+                <div class="form-group">
+                    <br><label>Date :</label>
+                    <input type="date" content="" th:field="*{date}" id="result1"><br><br>
+                    <label>Hour :</label>
+                    <input type="time" th:field="*{time}" id="result2">
+                    <br>
+                </div>
             </div>
             <div class="form-group">
                 <br>
-                <button class="btn btn-primary " name="submit" type="submit">Submit</button>
+                <button class="button" name="submit" type="submit">Submit</button>
             </div>
+            <br>
         </fieldset>
     </form>
 </div>
@@ -39,7 +42,7 @@
 <div th:if="${dateErrorMessage}" th:utext="${dateErrorMessage}"></div>
 <br>
 <div th:if="${timeErrorMessage}" th:utext="${timeErrorMessage}"></div>
-<a th:href="@{/}">retour</a>
+<!--<br><a th:href="@{/}">Back to menu</a>-->
 
 <script>
 $('#result1').datePicker({
@@ -51,6 +54,7 @@ $('#result1').datePicker({
 
 $('#result2').timePicker({
 });
+
 
 </script>
 </body>

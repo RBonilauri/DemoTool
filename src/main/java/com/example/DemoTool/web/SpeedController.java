@@ -1,7 +1,6 @@
 package com.example.DemoTool.web;
 
 import com.example.DemoTool.form.TimeDataForm;
-import com.example.DemoTool.model.TimeData;
 import com.example.DemoTool.service.ImportFromTimeService;
 import org.lfenergy.operatorfabric.time.model.SpeedEnum;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +43,7 @@ public class SpeedController {
     }
 
     @RequestMapping(value = {"formSpeed"}, method = RequestMethod.POST)
-    public String postSpeed(@ModelAttribute("timeDataForm") TimeDataForm timeDataForm, Model model) {
+    public String postSpeed(@ModelAttribute("timeDataForm") TimeDataForm timeDataForm) {
         String speed = timeDataForm.getSpeed();
         currentSpeed = speed;
         importFromTimeService.postSpeed(currentSpeed);
