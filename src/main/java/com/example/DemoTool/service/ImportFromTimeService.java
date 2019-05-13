@@ -167,7 +167,7 @@ public class ImportFromTimeService {
         return response;
     }
 
-    public URI postNextCard(long choosenTime) {
+    public String postNextCard(long choosenTime) {
         String uri = "http://localhost:2101/time/" + choosenTime + "/next/card";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
 
@@ -180,10 +180,10 @@ public class ImportFromTimeService {
 
         RestTemplate restTemplate = new RestTemplate();
         System.out.println(uri);
-        URI response = restTemplate.postForLocation(uri, request);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
 
-        System.out.println(response);
-        return response;
+        System.out.println("===" + responseEntity.getStatusCode() + "===");
+        return String.valueOf(responseEntity);
     }
 
     /**
@@ -206,7 +206,7 @@ public class ImportFromTimeService {
         return responseObject;
     }
 
-    public URI postPreviousCard(long choosenTime) {
+    public String postPreviousCard(long choosenTime) {
         String uri = "http://localhost:2101/time/" + choosenTime + "/previous/card";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
 
@@ -219,10 +219,10 @@ public class ImportFromTimeService {
 
         RestTemplate restTemplate = new RestTemplate();
         System.out.println(uri);
-        URI response = restTemplate.postForLocation(uri, request);
+        ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
 
-        System.out.println(response);
-        return response;
+        System.out.println("===" + responseEntity.getStatusCode() + "===");
+        return String.valueOf(responseEntity);
     }
 
 
