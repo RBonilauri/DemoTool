@@ -21,6 +21,7 @@ public class ImportFromAuthenticationService {
      * @throws RestClientException
      */
     public String postAuthenticationArguments() throws RestClientException {
+
         String uri = "http://localhost:2002/auth/token";
         String parameters = "username=admin&password=test&grant_type=password&client_id=clientIdPassword";
 

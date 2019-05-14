@@ -1,6 +1,5 @@
 package com.example.DemoTool.service;
 
-import com.example.DemoTool.model.ResponseObject;
 import com.example.DemoTool.model.TimeData;
 import org.lfenergy.operatorfabric.time.model.SpeedEnum;
 import org.springframework.http.*;
@@ -9,12 +8,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 import java.nio.charset.Charset;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.TimeZone;
 
 /**
  * class that processes the information imported from time service
@@ -25,62 +19,10 @@ public class ImportFromTimeService {
     ImportFromAuthenticationService importFromAuthenticationService = new ImportFromAuthenticationService();
 
     /**
-     * method to convert a character string (in yyyy-MM-dd format) to date in milliseconds
+     * method to make a GET request at http://localhost:2101/time to obtain the TimeData object
      *
-     * @param choosenDate String
-     * @return dateInLong
-     * long milliseconds (between Epoch and choosenDate)
-     */
-    public long convertDateToLong(String choosenDate) {
-        DateFormat formatter;
-        Date date;
-        long dateInLong = 0;
-        try {
-            formatter = new SimpleDateFormat("yyyy-MM-dd");
-            date = formatter.parse(choosenDate);
-            dateInLong = date.getTime();
-        } catch (ParseException e) {
-            System.out.println(e);
-        }
-        return dateInLong;
-    }
-
-    /**
-     * method for converting an hour (format HH:mm) into a long
      *
-     * @param choosenTime String
-     * @return timeInLong
-     * time in long at 01/01/1970
-     * @throws ParseException
-     */
-    public long convertTimeToLong(String choosenTime) throws ParseException {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
-        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        Date d = dateFormat.parse(choosenTime);
-        long timeInLong = d.getTime();
-        return timeInLong;
-    }
-
-    /**
-     * method to obtain a date thanks to a long
-     *
-     * @param longDate long
-     * @return dateText
-     * date in String in the format dd/MM/yyyy
-     */
-    public String convertLongToStringDate(long longDate) {
-        Date date = new Date(longDate);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy '-' HH:mm");
-        String dateText = dateFormat.format(date);
-        return dateText;
-    }
-
-    /**
-     * methode permettant de faire une requete GET a http://localhost:2101/time
-     * afin d'obtenir l'objet TimeData (deja mappé)
-     *
-     * @return timeData
-     * timeData object
+     * @return a TimeData object
      */
     public TimeData getTimeData() {
         String uri = "http://localhost:2101/time";
@@ -148,11 +90,13 @@ public class ImportFromTimeService {
     }
 
     /**
-     * @return
+     * method to send a post request to the time service to get the next card
+     *
+     * @param millisTime
+     * @return the response of the request (200 OK or 404 no card Found)
      */
-    public URI postNextCardWithoutMillisTime() {
-        String uri = "http://localhost:2101/time/next/card";
-//        String timeFromEpoch = "\"" + getTimeData().getComputedNow() + "\"";
+    public String postNextCard(long millisTime) {
+        String uri = "http://localhost:2101/time/" + millisTime + "/next/card";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
 
         HttpHeaders headers = new HttpHeaders();
@@ -163,35 +107,21 @@ public class ImportFromTimeService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        URI response = restTemplate.postForLocation(uri, request);
-        return response;
-    }
-
-    public String postNextCard(long choosenTime) {
-        String uri = "http://localhost:2101/time/" + choosenTime + "/next/card";
-        String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
-        headers.set("Authorization", accessToken);
-
-        HttpEntity<String> request = new HttpEntity<>(headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        System.out.println(uri);
         ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
 
-        System.out.println("===" + responseEntity.getStatusCode() + "===");
-        return String.valueOf(responseEntity);
+        String codeValue = String.valueOf(responseEntity.getStatusCodeValue());
+        System.out.println(codeValue);
+        return codeValue;
     }
 
     /**
-     * @return
+     * method to send a post request to the time service to get the previous card
+     *
+     * @param millisTime
+     * @return the response of the request (200 OK or 404 no card Found)
      */
-    public ResponseObject postPreviousCardWithoutMillisTime() {
-        String uri = "http://localhost:2101/time/previous/card";
-//        String timeFromEpoch = "\"" + getTimeData().getComputedNow() + "\"";
+    public String postPreviousCard(long millisTime) {
+        String uri = "http://localhost:2101/time/" + millisTime + "/previous/card";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
 
         HttpHeaders headers = new HttpHeaders();
@@ -202,28 +132,10 @@ public class ImportFromTimeService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseObject responseObject = restTemplate.postForObject(uri, request, ResponseObject.class);
-        return responseObject;
-    }
-
-    public String postPreviousCard(long choosenTime) {
-        String uri = "http://localhost:2101/time/" + choosenTime + "/previous/card";
-        String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
-        headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
-        headers.set("Authorization", accessToken);
-
-        HttpEntity<String> request = new HttpEntity<>(headers);
-
-        RestTemplate restTemplate = new RestTemplate();
-        System.out.println(uri);
         ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
 
-        System.out.println("===" + responseEntity.getStatusCode() + "===");
-        return String.valueOf(responseEntity);
+        String codeValue = String.valueOf(responseEntity.getStatusCodeValue());
+        System.out.println(codeValue);
+        return codeValue;
     }
-
-
 }

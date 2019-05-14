@@ -33,11 +33,10 @@
                 </tr>
             </table>
         </form>
+        <div th:if="${previousStatusCode}" th:utext="${previousStatusCode}"></div>
+        <div th:if="${nextStatusCode}" th:utext="${nextStatusCode}"></div>
     </div>
     <br>
 </fieldset>
-<!--<br><a th:href="@{/}">Back to menu</a>-->
-
-
 </body>
 </html>

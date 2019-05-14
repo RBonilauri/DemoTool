@@ -13,5 +13,4 @@ public class VirtualTimeForm {
 
     private String date;
     private String time;
-
 }

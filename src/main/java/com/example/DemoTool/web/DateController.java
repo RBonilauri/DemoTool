@@ -1,6 +1,7 @@
 package com.example.DemoTool.web;
 
 import com.example.DemoTool.form.VirtualTimeForm;
+import com.example.DemoTool.service.Converter;
 import com.example.DemoTool.service.ImportFromTimeService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -17,16 +18,15 @@ public class DateController {
     @Value("${dateError.message}")
     private String dateErrorMessage;
 
-    @Value("${timeError.message}")
-    private String timeErrorMessage;
-
     ImportFromTimeService importFromTimeService = new ImportFromTimeService();
+    Converter converter = new Converter();
 
     long currentDate;
     long currentTime;
     long now = System.currentTimeMillis();
-    String actualChoosenDate = importFromTimeService.convertLongToStringDate(importFromTimeService.getTimeData().getComputedNow());
-    String actualDate = importFromTimeService.convertLongToStringDate(now);
+
+    String actualChoosenDate = converter.convertLongToStringDate(importFromTimeService.getTimeData().getComputedNow());
+    String actualDate = converter.convertLongToStringDate(now);
 
     @RequestMapping(value = {"/formDate"}, method = RequestMethod.GET)
     public String formDate(Model model) {
@@ -47,14 +47,13 @@ public class DateController {
             model.addAttribute("dateErrorMessage", dateErrorMessage);
             return "time/formDate";
         } else {
-            currentDate = importFromTimeService.convertDateToLong(virtualTimeForm.getDate());
-            if (virtualTimeForm.getTime().isEmpty()) {
-                model.addAttribute("actualChoosenDate", actualChoosenDate);
-                model.addAttribute("actualDate", actualDate);
-                model.addAttribute("timeErrorMessage", timeErrorMessage);
-                return "time/formDate";
+            currentDate = converter.convertDateToLong(virtualTimeForm.getDate());
+            if (!virtualTimeForm.getTime().isEmpty()) {
+                currentTime = converter.convertTimeToLong(virtualTimeForm.getTime());
+                importFromTimeService.postCurrentTime(String.valueOf(currentDate + currentTime));
+                return "redirect:index";
             } else {
-                currentTime = importFromTimeService.convertTimeToLong(virtualTimeForm.getTime());
+                currentTime = 0;
                 importFromTimeService.postCurrentTime(String.valueOf(currentDate + currentTime));
                 return "redirect:index";
             }
