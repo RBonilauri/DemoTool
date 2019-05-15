@@ -51,12 +51,12 @@ public class DateController {
             return "time/formDate";
         } else {
             currentDate = converter.convertDateToLong(virtualTimeForm.getDate());
-            if (!virtualTimeForm.getTime().isEmpty()) {
-                currentTime = converter.convertTimeToLong(virtualTimeForm.getTime());
+            if (virtualTimeForm.getTime().isEmpty()) {
+                currentTime = 0;
                 importFromTimeService.postCurrentTime(String.valueOf(currentDate + currentTime));
                 return "redirect:index";
             } else {
-                currentTime = 0;
+                currentTime = converter.convertTimeToLong(virtualTimeForm.getTime());
                 importFromTimeService.postCurrentTime(String.valueOf(currentDate + currentTime));
                 return "redirect:index";
             }
