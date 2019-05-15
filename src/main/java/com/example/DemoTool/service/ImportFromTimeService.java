@@ -21,7 +21,6 @@ public class ImportFromTimeService {
     /**
      * method to make a GET request at http://localhost:2101/time to obtain the TimeData object
      *
-     *
      * @return a TimeData object
      */
     public TimeData getTimeData() {

@@ -6,6 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * class converting data
+ */
 public class Converter {
 
     /**
@@ -15,17 +18,14 @@ public class Converter {
      * @return dateInLong
      * long milliseconds (between Epoch and choosenDate)
      */
-    public long convertDateToLong(String choosenDate) {
+    public long convertDateToLong(String choosenDate) throws ParseException {
         DateFormat formatter;
         Date date;
-        long dateInLong = 0;
-        try {
-            formatter = new SimpleDateFormat("yyyy-MM-dd");
-            date = formatter.parse(choosenDate);
-            dateInLong = date.getTime();
-        } catch (ParseException e) {
-            System.out.println(e);
-        }
+        long dateInLong;
+        formatter = new SimpleDateFormat("yyyy-MM-dd");
+        date = formatter.parse(choosenDate);
+        dateInLong = date.getTime();
+
         return dateInLong;
     }
 
@@ -41,8 +41,7 @@ public class Converter {
         SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm");
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
         Date d = dateFormat.parse(choosenTime);
-        long timeInLong = d.getTime();
-        return timeInLong;
+        return d.getTime();
     }
 
     /**
@@ -55,7 +54,6 @@ public class Converter {
     public String convertLongToStringDate(long longDate) {
         Date date = new Date(longDate);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy '-' HH:mm");
-        String dateText = dateFormat.format(date);
-        return dateText;
+        return dateFormat.format(date);
     }
 }

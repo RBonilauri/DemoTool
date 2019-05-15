@@ -1,22 +1,29 @@
 package com.example.DemoTool;
 
+import com.example.DemoTool.service.Converter;
 import com.example.DemoTool.service.ImportFromAuthenticationService;
 import com.example.DemoTool.service.ImportFromTimeService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.text.ParseException;
+
 @SpringBootApplication
 public class DemoToolApplication {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
 
         ImportFromTimeService importFromTimeService = new ImportFromTimeService();
         ImportFromAuthenticationService importFromAuthenticationService = new ImportFromAuthenticationService();
+        Converter converter = new Converter();
 
         SpringApplication.run(DemoToolApplication.class, args);
         System.out.println("=================================================");
         System.out.println(importFromAuthenticationService.postAuthenticationArguments());
         System.out.println(importFromTimeService.getTimeData().toString());
+        System.out.println(converter.convertDateToLong("2006-05-21"));
+        System.out.println(converter.convertTimeToLong("02:12"));
+        System.out.println(converter.convertLongToStringDate(1148162400000L));
         System.out.println("=================================================");
 
         // DONE : Relire doc time

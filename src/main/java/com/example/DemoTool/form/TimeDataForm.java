@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class TimeDataForm {
 
     private long referenceTime;
-    private long virtualTime;
-    private VirtualTimeForm computedNow;
+    private VirtualTimeForm virtualTime;
+    private long computedNow;
     private String speed;
 }

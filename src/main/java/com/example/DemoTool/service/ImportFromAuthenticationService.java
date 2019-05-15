@@ -13,9 +13,7 @@ import org.springframework.web.client.RestTemplate;
 public class ImportFromAuthenticationService {
 
     /**
-     * methode envoyant une requete POST sous forme de JSON avec les attributs de la
-     * classe Authentication a http://localhost:2002/auth/token la requete renvoie un token
-     * de type TokenAuthentication
+     *method sending a post request to http://localhost:2002/auth/token to obtain a token de type TokenAuthentication
      *
      * @return String permettant de completer l'entete des requetes pour TimeData
      * @throws RestClientException

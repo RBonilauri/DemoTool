@@ -25,11 +25,13 @@ public class DateController {
     long currentTime;
     long now = System.currentTimeMillis();
 
-    String actualChoosenDate = converter.convertLongToStringDate(importFromTimeService.getTimeData().getComputedNow());
+
     String actualDate = converter.convertLongToStringDate(now);
 
     @RequestMapping(value = {"/formDate"}, method = RequestMethod.GET)
     public String formDate(Model model) {
+
+        String actualChoosenDate = converter.convertLongToStringDate(importFromTimeService.getTimeData().getComputedNow());
 
         VirtualTimeForm virtualTimeForm = new VirtualTimeForm();
         model.addAttribute("actualChoosenDate", actualChoosenDate);
@@ -40,6 +42,8 @@ public class DateController {
 
     @RequestMapping(value = {"formDate"}, method = RequestMethod.POST)
     public String postCurrentTime(@ModelAttribute("virtualTimeForm") VirtualTimeForm virtualTimeForm, Model model) throws ParseException {
+
+        String actualChoosenDate = converter.convertLongToStringDate(importFromTimeService.getTimeData().getComputedNow());
 
         if (virtualTimeForm.getDate().isEmpty()) {
             model.addAttribute("actualChoosenDate", actualChoosenDate);
