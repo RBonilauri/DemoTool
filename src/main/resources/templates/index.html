@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Demo Tool</title>
@@ -23,13 +22,18 @@
             <li><a th:href="@{/formDate}">Change Date</a><br></li>
             <li><a th:href="@{/fastForwards}">Fast-forwards / Rewind</a></li>
         </ul>
+        <br>
+        <div id="raz">
+            <form action="#" th:action="@{/}" method="post">
+                <button type="submit" name="raz">Reset time configuration</button>
+            </form>
+        </div>
+        <br>
     </div>
 </fieldset>
 <p hidden id="getTime" th:text="${timeInfo}"/>
 <p hidden id="speed" th:text="${speed}"/>
-
 <script language="JavaScript">
-
     var getTime = document.getElementById('getTime');
     var speed = document.getElementById('speed');
     var jsonTime = getTime.textContent;
@@ -44,9 +48,6 @@
         //document.write(vitesse);
         alert(vitesse);
     }
-
-
 </script>
 </body>
-
 </html>

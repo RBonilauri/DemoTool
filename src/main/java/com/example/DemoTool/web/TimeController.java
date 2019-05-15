@@ -31,4 +31,10 @@ public class TimeController {
 
         return "index";
     }
+
+    @RequestMapping(value = {"/", "/index"}, method = RequestMethod.POST)
+    public String deleteTime() {
+        importFromTimeService.deleteTime();
+        return "redirect:index";
+    }
 }

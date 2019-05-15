@@ -11,10 +11,8 @@
         integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" c
         rossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment-with-locales.min.js"></script>
-
 <link href="css/datetimepicker.css" rel="stylesheet">
 <script src="js/datetimepicker.js"></script>
-
 <div class="container" id="picker">
     <form action="#" th:action="@{/formDate}" th:object="${virtualTimeForm}" method="POST">
         <fieldset>
@@ -38,12 +36,7 @@
         </fieldset>
     </form>
 </div>
-
 <div th:if="${dateErrorMessage}" th:utext="${dateErrorMessage}"></div>
-<br>
-<div th:if="${timeErrorMessage}" th:utext="${timeErrorMessage}"></div>
-<!--<br><a th:href="@{/}">Back to menu</a>-->
-
 <script>
 $('#result1').datePicker({
     selectData: "now",
@@ -54,8 +47,6 @@ $('#result1').datePicker({
 
 $('#result2').timePicker({
 });
-
-
 </script>
 </body>
 </html>

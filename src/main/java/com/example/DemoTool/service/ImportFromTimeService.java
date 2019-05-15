@@ -61,7 +61,7 @@ public class ImportFromTimeService {
 
         RestTemplate restTemplate = new RestTemplate();
         SpeedEnum response = restTemplate.postForObject(uri, request, SpeedEnum.class);
-        return speedEnum;
+        return String.valueOf(response);
     }
 
     /**
@@ -108,7 +108,7 @@ public class ImportFromTimeService {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
 
-        String codeValue = String.valueOf(responseEntity.getStatusCodeValue());
+        String codeValue = String.valueOf(responseEntity.getStatusCode());
         System.out.println(codeValue);
         return codeValue;
     }
@@ -133,7 +133,31 @@ public class ImportFromTimeService {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
 
-        String codeValue = String.valueOf(responseEntity.getStatusCodeValue());
+        String codeValue = String.valueOf(responseEntity.getStatusCode());
+        System.out.println(codeValue);
+        return codeValue;
+    }
+
+    /**
+     * method to reset time configuration
+     *
+     * @return the request's response
+     */
+    public String deleteTime() {
+        String uri = "http://localhost:2101/time";
+        String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
+        headers.setAcceptCharset(Arrays.asList(Charset.forName("UTF-8")));
+        headers.set("Authorization", accessToken);
+
+        HttpEntity<String> request = new HttpEntity<>(headers);
+
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.DELETE, request, String.class);
+
+        String codeValue = String.valueOf(responseEntity.getStatusCode());
         System.out.println(codeValue);
         return codeValue;
     }

@@ -24,6 +24,13 @@ public class DemoToolApplication {
         System.out.println(converter.convertDateToLong("2006-05-21"));
         System.out.println(converter.convertTimeToLong("02:12"));
         System.out.println(converter.convertLongToStringDate(1148162400000L));
+        long d = converter.convertDateToLong("2019-04-17");
+        long t = converter.convertTimeToLong("08:50");
+        long dt = d + t;
+        System.out.println("d = " + d);
+        System.out.println("t = " + t);
+        System.out.println("d + t = " + dt);
+        System.out.println(converter.convertLongToStringDate(dt));
         System.out.println("=================================================");
 
         // DONE : Relire doc time
@@ -32,8 +39,8 @@ public class DemoToolApplication {
         // DONE : Récupération de la date courante du serveur de temps affichée sur la page : ajouter l'heure
         // DONE : Mise à jour du début du temps simulé : permettre également de choisir l'heure
         // TODO : Réorganisation du code
-        // TODO : Réorganisation de la page : tout sur une seule page ?
-        // TODO : Remettre à zéro la config temps (bloqué par OC-124)
+        // DONE : Réorganisation de la page : tout sur une seule page ?
+        // DONE : Remettre à zéro la config temps (bloqué par OC-124)
         // TODO : Voir pb internationalisation date
         // TODO : Fast-forward / rewind
     }

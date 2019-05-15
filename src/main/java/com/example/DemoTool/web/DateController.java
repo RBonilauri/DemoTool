@@ -25,7 +25,6 @@ public class DateController {
     long currentTime;
     long now = System.currentTimeMillis();
 
-
     String actualDate = converter.convertLongToStringDate(now);
 
     @RequestMapping(value = {"/formDate"}, method = RequestMethod.GET)
