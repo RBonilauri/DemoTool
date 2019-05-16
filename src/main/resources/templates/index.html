@@ -12,8 +12,8 @@
     <div class="fieldsetContent">
         <p th:text="'Date : '+${computedNow}"></p>
         <th>
-            <input type="button" value="get /time" onclick="afficheJsonTime()">
-            <input type="button" value="vitesse" onclick="afficheVitesse()">
+            <input type="button" value="get time" onclick="afficheJsonTime()">
+            <input type="button" value="get speed" onclick="afficheVitesse()">
         </th>
         <br><br>
         <h3>Actions : </h3>
@@ -23,9 +23,9 @@
             <li><a th:href="@{/fastForwards}">Fast-forwards / Rewind</a></li>
         </ul>
         <br>
-        <div id="raz">
+        <div id="reset">
             <form action="#" th:action="@{/}" method="post">
-                <button type="submit" name="raz">Reset time configuration</button>
+                <button type="submit" name="reset">Reset time configuration</button>
             </form>
         </div>
         <br>

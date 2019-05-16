@@ -12,23 +12,27 @@
     <div class="fieldsetContent">
         <ul>
             <li>
-                Click on "Previous" to get the last card from now.
+                <div th:text="${previousResult}"></div>
             </li>
             <li>
-                Click on "Next" to get the next card from now.
+                <div th:text="${nextResult}"></div>
             </li>
         </ul>
         <form action="#" th:action="@{/fastForwards}" id="nextCard" method="POST">
             <table>
                 <tr>
                     <td>
-                        <button type="submit" name="action" value="Previous">Previous</button>
+                        <button type="submit" name="action" value="Previous"
+                                title="Click to get the last card from now.">Previous
+                        </button>
                     </td>
                     <td>
                         <div id="date" th:text="${computedNow}"></div>
                     </td>
                     <td>
-                        <button type="submit" name="action" value="Next">Next</button>
+                        <button type="submit" name="action" value="Next" title="Click to get the next card from now.">
+                            Next
+                        </button>
                     </td>
                 </tr>
             </table>
@@ -36,5 +40,7 @@
     </div>
     <br>
 </fieldset>
+<script>
+</script>
 </body>
 </html>

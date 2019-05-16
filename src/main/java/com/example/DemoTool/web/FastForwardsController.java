@@ -18,6 +18,16 @@ public class FastForwardsController {
 
     @RequestMapping(value = {"/fastForwards"}, method = RequestMethod.GET)
     public String form(Model model) {
+        if (importFromTimeService.postPreviousCard(importFromTimeService.getTimeData().getComputedNow()) == 404) {
+            model.addAttribute("previousResult", "No previous card found");
+        } else {
+            model.addAttribute("previousResult", "A previous card found");
+        }
+        if (importFromTimeService.postNextCard(importFromTimeService.getTimeData().getComputedNow()) == 404) {
+            model.addAttribute("nextResult", "No next card found");
+        } else {
+            model.addAttribute("nextResult", "A next card found");
+        }
         model.addAttribute("computedNow", dayComputedNow);
         return "time/fastForwards";
     }
@@ -37,5 +47,4 @@ public class FastForwardsController {
         }
         return "redirect:/fastForwards";
     }
-
 }

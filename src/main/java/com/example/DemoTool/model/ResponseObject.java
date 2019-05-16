@@ -13,5 +13,4 @@ public class ResponseObject {
 
     private int statusCode;
     private String messageCode;
-
 }

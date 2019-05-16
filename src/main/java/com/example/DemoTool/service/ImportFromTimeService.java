@@ -94,7 +94,7 @@ public class ImportFromTimeService {
      * @param millisTime
      * @return the response of the request (200 OK or 404 no card Found)
      */
-    public String postNextCard(long millisTime) {
+    public int postNextCard(long millisTime) {
         String uri = "http://localhost:2101/time/" + millisTime + "/next/card";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
 
@@ -106,9 +106,9 @@ public class ImportFromTimeService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
+        ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
 
-        String codeValue = String.valueOf(responseEntity.getStatusCode());
+        int codeValue = response.getStatusCodeValue();
         System.out.println(codeValue);
         return codeValue;
     }
@@ -119,9 +119,10 @@ public class ImportFromTimeService {
      * @param millisTime
      * @return the response of the request (200 OK or 404 no card Found)
      */
-    public String postPreviousCard(long millisTime) {
+    public int postPreviousCard(long millisTime) {
         String uri = "http://localhost:2101/time/" + millisTime + "/previous/card";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
+        int codeValue = 500;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -131,9 +132,8 @@ public class ImportFromTimeService {
         HttpEntity<String> request = new HttpEntity<>(headers);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> responseEntity = restTemplate.exchange(uri, HttpMethod.POST, request, String.class);
-
-        String codeValue = String.valueOf(responseEntity.getStatusCode());
+        ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
+        codeValue = response.getStatusCodeValue();
         System.out.println(codeValue);
         return codeValue;
     }
