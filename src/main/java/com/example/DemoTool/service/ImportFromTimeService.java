@@ -109,7 +109,6 @@ public class ImportFromTimeService {
         ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
 
         int codeValue = response.getStatusCodeValue();
-        System.out.println(codeValue);
         return codeValue;
     }
 
@@ -122,7 +121,6 @@ public class ImportFromTimeService {
     public int postPreviousCard(long millisTime) {
         String uri = "http://localhost:2101/time/" + millisTime + "/previous/card";
         String accessToken = "Bearer " + importFromAuthenticationService.postAuthenticationArguments();
-        int codeValue = 500;
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON_UTF8);
@@ -133,8 +131,7 @@ public class ImportFromTimeService {
 
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<String> response = restTemplate.postForEntity(uri, request, String.class);
-        codeValue = response.getStatusCodeValue();
-        System.out.println(codeValue);
+        int codeValue = response.getStatusCodeValue();
         return codeValue;
     }
 
